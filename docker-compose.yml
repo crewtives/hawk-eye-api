@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  hawk-eye-network:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:latest
+    container_name: hawk-eye-db
+    environment:
+      POSTGRES_DB: hawk-eye-api
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    networks:
+      - hawk-eye-network
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  redis:
+    image: "redis:latest"
+    container_name: hawk-eye-redis
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+    networks:
+      - hawk-eye-network
+
+  app:
+    image: node:18
+    container_name: hawk-eye-app
+    working_dir: /usr/src/app
+    volumes:
+      - ./app:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - hawk-eye-network
+    command: "npm run dev"
