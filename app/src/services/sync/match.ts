@@ -90,6 +90,20 @@ class MatchSyncerService {
 
     return matchesFromDB;
   }
+
+  public async getTeamMatches(teamKey: string): Promise<Match[]> {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+
+    const matchRepository = AppDataSource.getRepository(Match);
+
+    const matchesFromDB = await matchRepository.find({
+      where: [{ matchHomeTeamId: teamKey }, { matchAwayTeamId: teamKey }],
+    });
+
+    return matchesFromDB;
+  }
 }
 
 export default MatchSyncerService;

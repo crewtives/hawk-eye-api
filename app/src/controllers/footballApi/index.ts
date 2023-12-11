@@ -55,3 +55,24 @@ export const getMatches: RequestHandler = async (req, res) => {
     });
   }
 };
+
+export const getTeamMatches: RequestHandler = async (req, res) => {
+  try {
+    const { teamKey } = req.params;
+
+    if (!teamKey) {
+      throw new Error("Team key is required");
+    }
+
+    const response = await MatchSyncer.getTeamMatches(teamKey);
+
+    res.status(200).json({
+      data: response,
+    });
+  } catch (error) {
+    console.error("Error in getTeamMatches:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+    });
+  }
+};

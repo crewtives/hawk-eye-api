@@ -14,7 +14,7 @@
     "test:watch": "cross-env NODE_ENV=test dotenv -e .env jest --watch",
     "lint": "npx eslint src",
     "typeorm": "typeorm-ts-node-esm",
-    "migrate": "npm run typeorm migration:run -- -d src/data-source.ts",
+    "migrate": "ls&&npm run typeorm migration:run -- -d src/data-source.ts",
     "migrate:revert": "npm run typeorm migration:revert -- -d src/data-source.ts"
   },
   "dependencies": {

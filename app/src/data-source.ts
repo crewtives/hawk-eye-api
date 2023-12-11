@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   password: "password",
   database: "hawk-eye-api",
   synchronize: false,
-  logging: true,
+  logging: false,
   entities: [Team, Match],
   subscribers: [],
   migrations: [TeamMigration1702167475000, CreateMatchEntity1638930152063],
